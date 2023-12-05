@@ -1,2 +1,2 @@
-# RVIR_MyNet_backend
+# RVIR MyNet Backend
 Backend for MyNet mobile application
