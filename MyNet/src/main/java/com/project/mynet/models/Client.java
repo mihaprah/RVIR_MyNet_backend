@@ -20,7 +20,7 @@ public class Client {
 
     private String address;
 
-    private Double cashBalance;
+    private double cashBalance;
 
     private String email;
 

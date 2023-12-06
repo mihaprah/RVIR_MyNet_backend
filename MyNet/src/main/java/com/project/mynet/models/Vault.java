@@ -19,9 +19,9 @@ public class Vault {
 
     private String name;
 
-    private Double goal;
+    private double goal;
 
-    private Double amount = 0.0;
+    private double amount = 0.0;
 
     private Date dueDate;
 
