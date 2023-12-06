@@ -25,18 +25,6 @@ public class ClientService {
         return clientDao.findAll();
     }
 
-    //    Add new Client
-    public Client addNew(Client client) {
-        String email = client.getEmail();
-        Collection<Client> existingClients = clientDao.findAll();
-        for (Client cl : existingClients) {
-            if (Objects.equals(cl.getEmail(), email)) {
-                throw new NotFoundCustomException("Client with this email already exists", 400);
-            }
-        }
-        return clientDao.save(client);
-    }
-
     //    Update Client
     public Client update(Client client) {
         Client oldClient = clientDao.findById(client.getId()).orElseThrow(() -> new NotFoundCustomException("Client with this id does not exist.", 404));
