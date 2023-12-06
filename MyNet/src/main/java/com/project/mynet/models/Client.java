@@ -20,11 +20,13 @@ public class Client {
 
     private String address;
 
-    private double cashBalance;
+    private double cashBalance = 0.0;
 
     private String email;
 
     private String password;
+
+    private String salt;
 
     @OneToMany(mappedBy = "client", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     Collection<Vault> vaults;
