@@ -14,7 +14,7 @@ public class ClientService {
     public Iterable<Client> getAll(){
         return clientDao.findAll();
     }
-    public Client getById(String id){
+    public Client getById(Long id){
         return clientDao.findById(id).orElseThrow(() -> new IllegalCallerException("Client does not exist"));
     }
 
