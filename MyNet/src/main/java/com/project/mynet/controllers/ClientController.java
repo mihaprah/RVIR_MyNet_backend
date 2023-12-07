@@ -33,9 +33,18 @@ public class ClientController {
         return ResponseEntity.ok(updatedClient);
     }
 
+    @PutMapping("/updateCash/{id}")
+    public ResponseEntity<Double> updateClient(@PathVariable("id") Long id, @RequestBody double amount) {
+        double newCashBalance = clientService.updateCashBalance(amount, id);
+        return ResponseEntity.ok(newCashBalance);
+    }
+
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteClient(@PathVariable("id") Long id) {
         String message = clientService.delete(id);
         return ResponseEntity.ok(message);
     }
+
+
 }
