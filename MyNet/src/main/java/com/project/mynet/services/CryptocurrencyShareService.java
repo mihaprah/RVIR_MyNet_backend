@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Objects;
 
 @Service
 @AllArgsConstructor
@@ -28,6 +29,12 @@ public class CryptocurrencyShareService {
     }
 
     public CryptocurrencyShare addNew(CryptocurrencyShare cryptocurrencyShare){
+        Collection<CryptocurrencyShare> existingShares = getAllForOneClient(cryptocurrencyShare.getClient());
+        for (CryptocurrencyShare share : existingShares){
+            if (Objects.equals(share.getCryptocurrency().getCode(), cryptocurrencyShare.getCryptocurrency().getCode())){
+                throw new NotFoundCustomException("CryptocurrencyShare for this client already exist. Update the amount.", 400);
+            }
+        }
         return cryptocurrencyShareDao.save(cryptocurrencyShare);
     }
 

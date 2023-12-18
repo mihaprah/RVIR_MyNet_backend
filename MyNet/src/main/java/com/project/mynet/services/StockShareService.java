@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Objects;
 
 @Service
 @AllArgsConstructor
@@ -28,6 +29,12 @@ public class StockShareService {
     }
 
     public StockShare addNew(StockShare stockShare){
+        Collection<StockShare> existingShares = getAllForOneClient(stockShare.getClient());
+        for (StockShare share : existingShares){
+            if (Objects.equals(share.getStock().getCode(), stockShare.getStock().getCode())){
+                throw new NotFoundCustomException("StockShare for this client already exist. Update the amount.", 400);
+            }
+        }
         return stockShareDao.save(stockShare);
     }
 
