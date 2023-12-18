@@ -2,7 +2,7 @@ package com.project.mynet.controllers;
 
 
 import com.project.mynet.models.Client;
-import com.project.mynet.models.LoginRequest;
+import com.project.mynet.models.UpdateAmountRequest;
 import com.project.mynet.services.ClientService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -35,8 +35,8 @@ public class ClientController {
     }
 
     @PutMapping("/updateCash/{id}")
-    public ResponseEntity<Double> updateClient(@PathVariable("id") Long id, @RequestBody double amount) {
-        double newCashBalance = clientService.updateCashBalance(amount, id);
+    public ResponseEntity<Double> updateClient(@PathVariable("id") Long id, @RequestBody UpdateAmountRequest request) {
+        double newCashBalance = clientService.updateCashBalance(request.getAmount(), id);
         return ResponseEntity.ok(newCashBalance);
     }
 

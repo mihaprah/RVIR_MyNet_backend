@@ -2,6 +2,7 @@ package com.project.mynet.services;
 
 import com.project.mynet.dao.ClientRepository;
 import com.project.mynet.dao.VaultRepository;
+import com.project.mynet.dto.VaultDTO;
 import com.project.mynet.exceptions.NotFoundCustomException;
 import com.project.mynet.models.Client;
 import com.project.mynet.models.Vault;
@@ -17,6 +18,17 @@ public class VaultService {
 
     private VaultRepository vaultDao;
     private ClientRepository clientDao;
+
+    public VaultDTO mapToDTO(Vault vault) {
+        VaultDTO dto = new VaultDTO();
+        dto.setId(vault.getId());
+        dto.setName(vault.getName());
+        dto.setGoal(vault.getGoal());
+        dto.setAmount(vault.getAmount());
+        dto.setDueDate(vault.getDueDate());
+        dto.setIcon(vault.getIcon());
+        return dto;
+    }
 
     public Vault getOne(Long id) {
         return vaultDao.findById(id).orElseThrow(() -> new NotFoundCustomException("Vault with this id does not exist.", 404));

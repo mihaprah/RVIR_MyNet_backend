@@ -1,7 +1,8 @@
 package com.project.mynet.controllers;
 
+import com.project.mynet.models.Client;
 import com.project.mynet.models.CryptocurrencyShare;
-import com.project.mynet.models.StockShare;
+import com.project.mynet.models.UpdateAmountRequest;
 import com.project.mynet.services.CryptocurrencyShareService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -23,8 +24,9 @@ public class CryptocurrencyShareController {
     }
 
     @GetMapping
-    public Collection<CryptocurrencyShare> getAll() {
-        return cryptocurrencyShareService.getAll();
+    public ResponseEntity<Collection<CryptocurrencyShare>> getAllForOneClient(@RequestBody Client client) {
+        Collection<CryptocurrencyShare> allShares = cryptocurrencyShareService.getAllForOneClient(client);
+        return ResponseEntity.ok(allShares);
     }
 
 
@@ -35,8 +37,8 @@ public class CryptocurrencyShareController {
 
     }
     @PutMapping("/updateAmount/{id}")
-    public ResponseEntity<Integer> updateNewCryptocurrencyShare(@PathVariable("id") Long id, @RequestBody int amount){
-        int newCryptocurrencyShareAmount = cryptocurrencyShareService.updateCryptoAmount(id, amount);
+    public ResponseEntity<Double> updateNewCryptocurrencyShare(@PathVariable("id") Long id, @RequestBody UpdateAmountRequest request){
+        double newCryptocurrencyShareAmount = cryptocurrencyShareService.updateCryptoAmount(id, request.getAmount());
         return ResponseEntity.ok(newCryptocurrencyShareAmount);
     }
 

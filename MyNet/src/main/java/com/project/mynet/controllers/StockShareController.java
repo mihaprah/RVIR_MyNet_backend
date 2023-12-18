@@ -1,7 +1,8 @@
 package com.project.mynet.controllers;
 
-import com.project.mynet.models.CommodityShare;
+import com.project.mynet.models.Client;
 import com.project.mynet.models.StockShare;
+import com.project.mynet.models.UpdateAmountRequest;
 import com.project.mynet.services.StockShareService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +25,9 @@ public class StockShareController {
     }
 
     @GetMapping
-    public Collection<StockShare> getAll() {
-        return stockShareService.getAll();
+    public ResponseEntity<Collection<StockShare>> getAllForOneClient(@RequestBody Client client) {
+        Collection<StockShare> allShares = stockShareService.getAllForOneClient(client);
+        return ResponseEntity.ok(allShares);
     }
 
 
@@ -37,8 +39,8 @@ public class StockShareController {
     }
 
     @PutMapping("/updateAmount/{id}")
-    public ResponseEntity<Integer> updateStockShare(@PathVariable("id") Long id, @RequestBody int amount){
-        int newStockShareAmount = stockShareService.updateStockAmount(id, amount);
+    public ResponseEntity<Double> updateStockShare(@PathVariable("id") Long id, @RequestBody UpdateAmountRequest request){
+        double newStockShareAmount = stockShareService.updateStockAmount(id, request.getAmount());
         return ResponseEntity.ok(newStockShareAmount);
     }
 

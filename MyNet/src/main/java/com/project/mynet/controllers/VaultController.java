@@ -1,6 +1,8 @@
 package com.project.mynet.controllers;
 
+import com.project.mynet.dto.VaultDTO;
 import com.project.mynet.models.Client;
+import com.project.mynet.models.UpdateAmountRequest;
 import com.project.mynet.models.Vault;
 import com.project.mynet.services.VaultService;
 import lombok.AllArgsConstructor;
@@ -8,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @CrossOrigin
 @RestController
@@ -17,36 +21,40 @@ public class VaultController {
 
     private VaultService vaultService;
 
-
-    //mogoce da se tu pridobijo vsi vaulti dolocenega uporabnika ? al zake bi nucala vse vaulte
-    @GetMapping
-    public ResponseEntity<Collection<Vault>> getAllForOneClient(@RequestBody Client client){
+    @GetMapping("/all") // Modified endpoint
+    public ResponseEntity<Collection<VaultDTO>> getAllForOneClient(@RequestBody Client client) {
         Collection<Vault> allVaults = vaultService.getAllForOneClient(client);
-        return ResponseEntity.ok(allVaults);
+        List<VaultDTO> allVaultsDTO = allVaults.stream().map(vaultService::mapToDTO).collect(Collectors.toList());
+        return ResponseEntity.ok(allVaultsDTO);
     }
 
     @GetMapping("/{id}")
-    public Vault getById(@PathVariable("id") Long id) {
-        return vaultService.getOne(id);
+    public ResponseEntity<VaultDTO> getById(@PathVariable("id") Long id) {
+        Vault vault = vaultService.getOne(id);
+        if (vault == null) {
+            return ResponseEntity.notFound().build();
+        }
+        VaultDTO vaultDTO = vaultService.mapToDTO(vault);
+        return ResponseEntity.ok(vaultDTO);
     }
 
-    //mogoce nebi rabo add dodat idk !! kar na glavnem koreni post ?
     @PostMapping("/add")
-    public ResponseEntity<Vault> addVault(@RequestBody Vault vault){
+    public ResponseEntity<VaultDTO> addVault(@RequestBody Vault vault) {
         Vault newVault = vaultService.addNew(vault);
-        return ResponseEntity.ok(newVault);
+        VaultDTO newVaultDTO = vaultService.mapToDTO(newVault);
+        return ResponseEntity.ok(newVaultDTO);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<Vault> updateVault(@RequestBody Vault vault){
+    public ResponseEntity<VaultDTO> updateVault(@RequestBody Vault vault) {
         Vault updatedVault = vaultService.update(vault);
-        return ResponseEntity.ok(updatedVault);
+        VaultDTO updatedVaultDTO = vaultService.mapToDTO(updatedVault);
+        return ResponseEntity.ok(updatedVaultDTO);
     }
 
-    //nevem al bi blo bolse da se da id isto v request body?? nekaj ni ok!!
     @PutMapping("/updateAmount/{id}")
-    public ResponseEntity<Double> updateVaultAmount(@PathVariable("id") Long id, @RequestBody double amount){
-        double newAmount = vaultService.updateAmount(amount, id);
+    public ResponseEntity<Double> updateVaultAmount(@PathVariable("id") Long id, @RequestBody UpdateAmountRequest request) {
+        double newAmount = vaultService.updateAmount(request.getAmount(), id);
         return ResponseEntity.ok(newAmount);
     }
 
@@ -55,5 +63,5 @@ public class VaultController {
         String message = vaultService.delete(id);
         return ResponseEntity.ok(message);
     }
-
 }
+

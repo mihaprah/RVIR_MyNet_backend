@@ -1,5 +1,6 @@
 package com.project.mynet.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -11,10 +12,11 @@ public class CryptocurrencyShare {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private int amount;
+    private double amount;
 
     @ManyToOne
     @JoinColumn(name = "client_id")
+    @JsonIgnore
     private Client client;
 
     @ManyToOne

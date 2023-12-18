@@ -1,6 +1,7 @@
 package com.project.mynet.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.OnDelete;
@@ -30,6 +31,6 @@ public class Vault {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
+    @JsonIgnoreProperties({"vaults"})
     private Client client;
 }

@@ -11,7 +11,7 @@ public class CommodityShare {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private int amount;
+    private double amount;
 
     @ManyToOne
     @JoinColumn(name = "client_id")
