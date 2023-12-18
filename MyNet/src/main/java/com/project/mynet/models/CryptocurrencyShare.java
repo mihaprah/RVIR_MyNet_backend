@@ -16,7 +16,6 @@ public class CryptocurrencyShare {
 
     @ManyToOne
     @JoinColumn(name = "client_id")
-    @JsonIgnore
     private Client client;
 
     @ManyToOne
