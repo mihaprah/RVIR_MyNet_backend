@@ -17,8 +17,9 @@ public class CryptocurrencyShareController {
     private CryptocurrencyShareService cryptocurrencyShareService;
 
     @GetMapping("/{id}")
-    public CryptocurrencyShare getByID(@PathVariable("id") Long id){
-        return cryptocurrencyShareService.getByID(id);
+    public ResponseEntity<CryptocurrencyShare> getByID(@PathVariable("id") Long id){
+        CryptocurrencyShare cryptocurrencyShare = cryptocurrencyShareService.getByID(id);
+        return ResponseEntity.ok(cryptocurrencyShare);
     }
 
     @GetMapping
@@ -34,7 +35,7 @@ public class CryptocurrencyShareController {
 
     }
     @PutMapping("/updateAmount/{id}")
-    public ResponseEntity<Integer> updatenewCryptocurrencyShare(@PathVariable("id") Long id, @RequestBody int amount){
+    public ResponseEntity<Integer> updateNewCryptocurrencyShare(@PathVariable("id") Long id, @RequestBody int amount){
         int newCryptocurrencyShareAmount = cryptocurrencyShareService.updateCryptoAmount(id, amount);
         return ResponseEntity.ok(newCryptocurrencyShareAmount);
     }

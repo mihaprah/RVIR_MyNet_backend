@@ -18,8 +18,9 @@ public class StockShareController {
     private StockShareService stockShareService;
 
     @GetMapping("/{id}")
-    public StockShare getByID(@PathVariable("id") Long id){
-        return stockShareService.getByID(id);
+    public ResponseEntity<StockShare> getByID(@PathVariable("id") Long id){
+        StockShare stockShare = stockShareService.getByID(id);
+        return ResponseEntity.ok(stockShare);
     }
 
     @GetMapping

@@ -23,8 +23,9 @@ public class CommodityController {
     }
 
     @GetMapping("/{id}")
-    public Commodity getById(@PathVariable("id") Long id) {
-        return commodityService.getOne(id);
+    public ResponseEntity<Commodity> getById(@PathVariable("id") Long id) {
+        Commodity commodity = commodityService.getOne(id);
+        return ResponseEntity.ok(commodity);
     }
 
     @PostMapping("/add")

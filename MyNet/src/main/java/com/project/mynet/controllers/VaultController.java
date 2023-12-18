@@ -1,5 +1,6 @@
 package com.project.mynet.controllers;
 
+import com.project.mynet.models.Client;
 import com.project.mynet.models.Vault;
 import com.project.mynet.services.VaultService;
 import lombok.AllArgsConstructor;
@@ -19,8 +20,9 @@ public class VaultController {
 
     //mogoce da se tu pridobijo vsi vaulti dolocenega uporabnika ? al zake bi nucala vse vaulte
     @GetMapping
-    public Collection<Vault> getAll(){
-        return vaultService.getAll();
+    public ResponseEntity<Collection<Vault>> getAllForOneClient(@RequestBody Client client){
+        Collection<Vault> allVaults = vaultService.getAllForOneClient(client);
+        return ResponseEntity.ok(allVaults);
     }
 
     @GetMapping("/{id}")

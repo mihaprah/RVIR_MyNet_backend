@@ -23,8 +23,9 @@ public class CryptocurrencyController {
     }
 
     @GetMapping("/{id}")
-    public Cryptocurrency getById(@PathVariable("id") Long id) {
-        return cryptocurrencyService.getOne(id);
+    public ResponseEntity<Cryptocurrency> getById(@PathVariable("id") Long id) {
+        Cryptocurrency cryptocurrency = cryptocurrencyService.getOne(id);
+        return ResponseEntity.ok(cryptocurrency);
     }
 
     @PostMapping("/add")

@@ -23,8 +23,9 @@ public class ClientController {
     }
 
     @GetMapping("/{id}")
-    public Client getById(@PathVariable("id") Long id) {
-        return clientService.getById(id);
+    public ResponseEntity<Client> getById(@PathVariable("id") Long id) {
+        Client client = clientService.getById(id);
+        return ResponseEntity.ok(client);
     }
 
     @PutMapping("/update")

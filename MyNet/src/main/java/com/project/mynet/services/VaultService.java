@@ -1,7 +1,9 @@
 package com.project.mynet.services;
 
+import com.project.mynet.dao.ClientRepository;
 import com.project.mynet.dao.VaultRepository;
 import com.project.mynet.exceptions.NotFoundCustomException;
+import com.project.mynet.models.Client;
 import com.project.mynet.models.Vault;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,13 +16,15 @@ import java.util.Objects;
 public class VaultService {
 
     private VaultRepository vaultDao;
+    private ClientRepository clientDao;
 
     public Vault getOne(Long id) {
         return vaultDao.findById(id).orElseThrow(() -> new NotFoundCustomException("Vault with this id does not exist.", 404));
     }
 
-    public Collection<Vault> getAll() {
-        return vaultDao.findAll();
+    public Collection<Vault> getAllForOneClient(Client client) {
+        clientDao.findById(client.getId()).orElseThrow(() -> new NotFoundCustomException("Client does not exist.", 400));
+        return vaultDao.findAllByClient_Id(client.getId());
     }
 
     public Vault addNew(Vault vault) {

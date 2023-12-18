@@ -23,8 +23,9 @@ public class StockController {
     }
 
     @GetMapping("/{id}")
-    public Stock getById(@PathVariable("id") Long id) {
-        return stockService.getOne(id);
+    public ResponseEntity<Stock> getById(@PathVariable("id") Long id) {
+        Stock stock = stockService.getOne(id);
+        return ResponseEntity.ok(stock);
     }
 
     @PostMapping("/add")

@@ -18,10 +18,10 @@ public class CommodityShareController {
 
     private CommodityShareService commodityShareService;
 
-
     @GetMapping("/{id}")
-    public CommodityShare getByID(@PathVariable("id") Long id){
-        return commodityShareService.getByID(id);
+    public ResponseEntity<CommodityShare> getByID(@PathVariable("id") Long id){
+        CommodityShare commodityShare = commodityShareService.getByID(id);
+        return ResponseEntity.ok(commodityShare);
     }
 
     @GetMapping
