@@ -9,6 +9,6 @@ import java.util.Collection;
 
 public interface CryptocurrencyShareRepository extends JpaRepository<CryptocurrencyShare, Long> {
 
-    @Query("select c from CommodityShare c where c.client.id = ?1")
+    @Query("select c from CryptocurrencyShare c where c.client.id = ?1")
     Collection<CryptocurrencyShare> findCryptocurrencySharesByClient_Id(Long id);
 }
