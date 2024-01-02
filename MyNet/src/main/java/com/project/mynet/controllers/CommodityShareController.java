@@ -1,7 +1,6 @@
 package com.project.mynet.controllers;
 
 
-import com.project.mynet.models.Client;
 import com.project.mynet.models.CommodityShare;
 import com.project.mynet.models.UpdateAmountRequest;
 import com.project.mynet.services.CommodityShareService;
@@ -26,9 +25,9 @@ public class CommodityShareController {
         return ResponseEntity.ok(commodityShare);
     }
 
-    @GetMapping
-    public ResponseEntity<Collection<CommodityShare>> getAllForOneClient(@RequestBody Client client) {
-        Collection<CommodityShare> allShares = commodityShareService.getAllForOneClient(client);
+    @GetMapping("/all/{client_id}")
+    public ResponseEntity<Collection<CommodityShare>> getAllForOneClient(@PathVariable Long client_id) {
+        Collection<CommodityShare> allShares = commodityShareService.getAllForOneClient(client_id);
         return ResponseEntity.ok(allShares);
     }
 

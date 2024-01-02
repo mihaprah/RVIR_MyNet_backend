@@ -1,6 +1,5 @@
 package com.project.mynet.controllers;
 
-import com.project.mynet.models.Client;
 import com.project.mynet.models.CryptocurrencyShare;
 import com.project.mynet.models.UpdateAmountRequest;
 import com.project.mynet.services.CryptocurrencyShareService;
@@ -23,9 +22,9 @@ public class CryptocurrencyShareController {
         return ResponseEntity.ok(cryptocurrencyShare);
     }
 
-    @GetMapping
-    public ResponseEntity<Collection<CryptocurrencyShare>> getAllForOneClient(@RequestBody Client client) {
-        Collection<CryptocurrencyShare> allShares = cryptocurrencyShareService.getAllForOneClient(client);
+    @GetMapping("/all/{client_id}")
+    public ResponseEntity<Collection<CryptocurrencyShare>> getAllForOneClient(@PathVariable Long client_id) {
+        Collection<CryptocurrencyShare> allShares = cryptocurrencyShareService.getAllForOneClient(client_id);
         return ResponseEntity.ok(allShares);
     }
 

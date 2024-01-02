@@ -4,7 +4,6 @@ import com.project.mynet.dao.ClientRepository;
 import com.project.mynet.dao.VaultRepository;
 import com.project.mynet.dto.VaultDTO;
 import com.project.mynet.exceptions.NotFoundCustomException;
-import com.project.mynet.models.Client;
 import com.project.mynet.models.Vault;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,7 +25,6 @@ public class VaultService {
         dto.setGoal(vault.getGoal());
         dto.setAmount(vault.getAmount());
         dto.setDueDate(vault.getDueDate());
-        dto.setIcon(vault.getIcon());
         return dto;
     }
 
@@ -34,9 +32,9 @@ public class VaultService {
         return vaultDao.findById(id).orElseThrow(() -> new NotFoundCustomException("Vault with this id does not exist.", 404));
     }
 
-    public Collection<Vault> getAllForOneClient(Client client) {
-        clientDao.findById(client.getId()).orElseThrow(() -> new NotFoundCustomException("Client does not exist.", 400));
-        return vaultDao.findAllByClient_Id(client.getId());
+    public Collection<Vault> getAllForOneClient(Long client_id) {
+        clientDao.findById(client_id).orElseThrow(() -> new NotFoundCustomException("Client does not exist.", 400));
+        return vaultDao.findAllByClient_Id(client_id);
     }
 
     public Vault addNew(Vault vault) {
@@ -53,7 +51,6 @@ public class VaultService {
     public Vault update(Vault vault) {
         Vault oldVault = vaultDao.findById(vault.getId()).orElseThrow(() -> new NotFoundCustomException("Vault with this id does not exist.", 404));
 
-        oldVault.setIcon(vault.getIcon());
         oldVault.setGoal(vault.getGoal());
         oldVault.setName(vault.getName());
         oldVault.setDueDate(vault.getDueDate());

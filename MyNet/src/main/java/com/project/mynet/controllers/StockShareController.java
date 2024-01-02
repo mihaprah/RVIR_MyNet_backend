@@ -1,6 +1,5 @@
 package com.project.mynet.controllers;
 
-import com.project.mynet.models.Client;
 import com.project.mynet.models.StockShare;
 import com.project.mynet.models.UpdateAmountRequest;
 import com.project.mynet.services.StockShareService;
@@ -24,15 +23,15 @@ public class StockShareController {
         return ResponseEntity.ok(stockShare);
     }
 
-    @GetMapping
-    public ResponseEntity<Collection<StockShare>> getAllForOneClient(@RequestBody Client client) {
-        Collection<StockShare> allShares = stockShareService.getAllForOneClient(client);
+    @GetMapping("/all/{client_id}")
+    public ResponseEntity<Collection<StockShare>> getAllForOneClient(@PathVariable Long client_id) {
+        Collection<StockShare> allShares = stockShareService.getAllForOneClient(client_id);
         return ResponseEntity.ok(allShares);
     }
 
 
     @PostMapping("/add")
-    public ResponseEntity<StockShare> createCommodityShare(@RequestBody StockShare stockShare){
+    public ResponseEntity<StockShare> createStockShare(@RequestBody StockShare stockShare){
         StockShare newStockShare = stockShareService.addNew(stockShare);
         return ResponseEntity.ok(newStockShare);
 

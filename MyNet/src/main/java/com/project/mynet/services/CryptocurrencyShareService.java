@@ -4,7 +4,6 @@ package com.project.mynet.services;
 import com.project.mynet.dao.ClientRepository;
 import com.project.mynet.dao.CryptocurrencyShareRepository;
 import com.project.mynet.exceptions.NotFoundCustomException;
-import com.project.mynet.models.Client;
 import com.project.mynet.models.CryptocurrencyShare;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,13 +22,13 @@ public class CryptocurrencyShareService {
         return cryptocurrencyShareDao.findById(id).orElseThrow(() -> new NotFoundCustomException("CryptocurrencyShare with this id does not exist.", 404));
     }
 
-    public Collection<CryptocurrencyShare> getAllForOneClient(Client client){
-        clientDao.findById(client.getId()).orElseThrow(() -> new NotFoundCustomException("Client does not exist.", 400));
-        return cryptocurrencyShareDao.findCryptocurrencySharesByClient_Id(client.getId());
+    public Collection<CryptocurrencyShare> getAllForOneClient(Long client_id){
+        clientDao.findById(client_id).orElseThrow(() -> new NotFoundCustomException("Client does not exist.", 400));
+        return cryptocurrencyShareDao.findCryptocurrencySharesByClient_Id(client_id);
     }
 
     public CryptocurrencyShare addNew(CryptocurrencyShare cryptocurrencyShare){
-        Collection<CryptocurrencyShare> existingShares = getAllForOneClient(cryptocurrencyShare.getClient());
+        Collection<CryptocurrencyShare> existingShares = getAllForOneClient(cryptocurrencyShare.getClient().getId());
         for (CryptocurrencyShare share : existingShares){
             if (Objects.equals(share.getCryptocurrency().getCode(), cryptocurrencyShare.getCryptocurrency().getCode())){
                 throw new NotFoundCustomException("CryptocurrencyShare for this client already exist. Update the amount.", 400);

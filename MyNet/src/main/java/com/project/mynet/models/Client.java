@@ -18,8 +18,6 @@ public class Client {
 
     private String lastname;
 
-    private String address;
-
     private double cashBalance = 0.0;
 
     private String email;

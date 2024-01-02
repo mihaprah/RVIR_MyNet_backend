@@ -32,7 +32,6 @@ public class RegisterService {
 
         if (Objects.equals(client.getName(), "") ||
                 Objects.equals(client.getLastname(), "") ||
-                Objects.equals(client.getAddress(), "") ||
                 Objects.equals(email, "") ||
                 Objects.equals(password, "")){
             throw new NotFoundCustomException("All data must be provided.", 400);

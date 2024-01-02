@@ -1,7 +1,6 @@
 package com.project.mynet.controllers;
 
 import com.project.mynet.dto.VaultDTO;
-import com.project.mynet.models.Client;
 import com.project.mynet.models.UpdateAmountRequest;
 import com.project.mynet.models.Vault;
 import com.project.mynet.services.VaultService;
@@ -21,9 +20,9 @@ public class VaultController {
 
     private VaultService vaultService;
 
-    @GetMapping("/all") // Modified endpoint
-    public ResponseEntity<Collection<VaultDTO>> getAllForOneClient(@RequestBody Client client) {
-        Collection<Vault> allVaults = vaultService.getAllForOneClient(client);
+    @GetMapping("/all/{client_id}")
+    public ResponseEntity<Collection<VaultDTO>> getAllForOneClient(@PathVariable Long client_id) {
+        Collection<Vault> allVaults = vaultService.getAllForOneClient(client_id);
         List<VaultDTO> allVaultsDTO = allVaults.stream().map(vaultService::mapToDTO).collect(Collectors.toList());
         return ResponseEntity.ok(allVaultsDTO);
     }

@@ -4,7 +4,6 @@ package com.project.mynet.services;
 import com.project.mynet.dao.ClientRepository;
 import com.project.mynet.dao.StockShareRepository;
 import com.project.mynet.exceptions.NotFoundCustomException;
-import com.project.mynet.models.Client;
 import com.project.mynet.models.StockShare;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,13 +22,13 @@ public class StockShareService {
         return stockShareDao.findById(id).orElseThrow(() -> new NotFoundCustomException("StockShare with this id does not exist.", 404));
     }
 
-    public Collection<StockShare> getAllForOneClient(Client client){
-        clientDao.findById(client.getId()).orElseThrow(() -> new NotFoundCustomException("Client does not exist.", 404));
-        return stockShareDao.findStockSharesByClient_Id(client.getId());
+    public Collection<StockShare> getAllForOneClient(Long client_id){
+        clientDao.findById(client_id).orElseThrow(() -> new NotFoundCustomException("Client does not exist.", 404));
+        return stockShareDao.findStockSharesByClient_Id(client_id);
     }
 
     public StockShare addNew(StockShare stockShare){
-        Collection<StockShare> existingShares = getAllForOneClient(stockShare.getClient());
+        Collection<StockShare> existingShares = getAllForOneClient(stockShare.getClient().getId());
         for (StockShare share : existingShares){
             if (Objects.equals(share.getStock().getCode(), stockShare.getStock().getCode())){
                 throw new NotFoundCustomException("StockShare for this client already exist. Update the amount.", 400);

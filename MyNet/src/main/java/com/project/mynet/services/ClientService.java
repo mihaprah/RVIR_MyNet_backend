@@ -8,7 +8,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.Objects;
 
 @Service
 @AllArgsConstructor
@@ -31,7 +30,6 @@ public class ClientService {
 
         oldClient.setName(client.getName());
         oldClient.setLastname(client.getLastname());
-        oldClient.setAddress(client.getAddress());
         oldClient.setEmail(client.getEmail());
 
         return clientDao.save(oldClient);
