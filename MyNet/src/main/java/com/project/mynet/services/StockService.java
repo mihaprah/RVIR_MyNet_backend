@@ -23,6 +23,17 @@ public class StockService {
         return stockDao.findAll();
     }
 
+    public Stock getByCode(String code) {
+        if (code.isEmpty()){
+            throw new NotFoundCustomException("Code must be provided.", 400);
+        }
+        Stock stock = stockDao.findByCode(code);
+        if (stock == null){
+            throw new NotFoundCustomException("Cryptocurrency with this code does not exist.", 400);
+        }
+        return stock;
+    }
+
     public Stock addNew(Stock stock) {
         String newCode = stock.getCode();
         Collection<Stock> existingStocks = stockDao.findAll();

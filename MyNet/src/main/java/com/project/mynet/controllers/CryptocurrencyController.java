@@ -1,6 +1,5 @@
 package com.project.mynet.controllers;
 
-import com.project.mynet.models.Commodity;
 import com.project.mynet.models.Cryptocurrency;
 import com.project.mynet.services.CryptocurrencyService;
 import lombok.AllArgsConstructor;
@@ -25,6 +24,12 @@ public class CryptocurrencyController {
     @GetMapping("/{id}")
     public ResponseEntity<Cryptocurrency> getById(@PathVariable("id") Long id) {
         Cryptocurrency cryptocurrency = cryptocurrencyService.getOne(id);
+        return ResponseEntity.ok(cryptocurrency);
+    }
+
+    @GetMapping("/code/{code}")
+    public ResponseEntity<Cryptocurrency> getByCode(@PathVariable("code") String code) {
+        Cryptocurrency cryptocurrency = cryptocurrencyService.getByCode(code);
         return ResponseEntity.ok(cryptocurrency);
     }
 

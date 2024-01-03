@@ -1,6 +1,6 @@
 package com.project.mynet.controllers;
 
-import com.project.mynet.models.Client;
+
 import com.project.mynet.models.Commodity;
 import com.project.mynet.services.CommodityService;
 import lombok.AllArgsConstructor;
@@ -25,6 +25,12 @@ public class CommodityController {
     @GetMapping("/{id}")
     public ResponseEntity<Commodity> getById(@PathVariable("id") Long id) {
         Commodity commodity = commodityService.getOne(id);
+        return ResponseEntity.ok(commodity);
+    }
+
+    @GetMapping("/code/{code}")
+    public ResponseEntity<Commodity> getByCode(@PathVariable("code") String code) {
+        Commodity commodity = commodityService.getByCode(code);
         return ResponseEntity.ok(commodity);
     }
 

@@ -23,6 +23,17 @@ public class CommodityService {
         return commodityDao.findAll();
     }
 
+    public Commodity getByCode(String code) {
+        if (code.isEmpty()){
+            throw new NotFoundCustomException("Code must be provided.", 400);
+        }
+        Commodity commodity = commodityDao.findByCode(code);
+        if (commodity == null){
+            throw new NotFoundCustomException("Commodity with this code does not exist.", 400);
+        }
+        return commodity;
+    }
+
     public Commodity addNew(Commodity commodity) {
         String newCode = commodity.getCode();
         Collection<Commodity> existingCommodities = commodityDao.findAll();

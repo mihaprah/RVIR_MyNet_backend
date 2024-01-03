@@ -28,6 +28,12 @@ public class StockController {
         return ResponseEntity.ok(stock);
     }
 
+    @GetMapping("/code/{code}")
+    public ResponseEntity<Stock> getByCode(@PathVariable("code") String code) {
+        Stock stock = stockService.getByCode(code);
+        return ResponseEntity.ok(stock);
+    }
+
     @PostMapping("/add")
     public ResponseEntity<Stock> addStock(@RequestBody Stock stock){
         Stock newStock = stockService.addNew(stock);

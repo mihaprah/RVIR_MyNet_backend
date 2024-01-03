@@ -23,6 +23,17 @@ public class CryptocurrencyService {
         return cryptocurrencyDao.findAll();
     }
 
+    public Cryptocurrency getByCode(String code) {
+        if (code.isEmpty()){
+            throw new NotFoundCustomException("Code must be provided.", 400);
+        }
+        Cryptocurrency cryptocurrency = cryptocurrencyDao.findByCode(code);
+        if (cryptocurrency == null){
+            throw new NotFoundCustomException("Cryptocurrency with this code does not exist.", 400);
+        }
+        return cryptocurrency;
+    }
+
     public Cryptocurrency addNew(Cryptocurrency cryptocurrency) {
         String newCode = cryptocurrency.getCode();
         Collection<Cryptocurrency> existingCryptocurrencies = cryptocurrencyDao.findAll();
