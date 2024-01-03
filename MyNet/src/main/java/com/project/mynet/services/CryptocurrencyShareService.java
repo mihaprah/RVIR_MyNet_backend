@@ -31,7 +31,10 @@ public class CryptocurrencyShareService {
         Collection<CryptocurrencyShare> existingShares = getAllForOneClient(cryptocurrencyShare.getClient().getId());
         for (CryptocurrencyShare share : existingShares){
             if (Objects.equals(share.getCryptocurrency().getCode(), cryptocurrencyShare.getCryptocurrency().getCode())){
-                throw new NotFoundCustomException("CryptocurrencyShare for this client already exist. Update the amount.", 400);
+                double oldAmount = share.getAmount();
+                double newAmount = oldAmount + cryptocurrencyShare.getAmount();
+                updateCryptoAmount(share.getId(), newAmount);
+                return share;
             }
         }
         return cryptocurrencyShareDao.save(cryptocurrencyShare);

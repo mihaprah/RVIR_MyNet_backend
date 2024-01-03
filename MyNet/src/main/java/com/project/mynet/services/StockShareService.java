@@ -31,7 +31,10 @@ public class StockShareService {
         Collection<StockShare> existingShares = getAllForOneClient(stockShare.getClient().getId());
         for (StockShare share : existingShares){
             if (Objects.equals(share.getStock().getCode(), stockShare.getStock().getCode())){
-                throw new NotFoundCustomException("StockShare for this client already exist. Update the amount.", 400);
+                double oldAmount = share.getAmount();
+                double newAmount = oldAmount + stockShare.getAmount();
+                updateStockAmount(share.getId(), newAmount);
+                return share;
             }
         }
         return stockShareDao.save(stockShare);

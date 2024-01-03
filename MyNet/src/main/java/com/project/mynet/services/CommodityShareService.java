@@ -31,7 +31,10 @@ public class CommodityShareService {
         Collection<CommodityShare> commodityShares = getAllForOneClient(commodityShare.getClient().getId());
         for(CommodityShare share : commodityShares){
             if (Objects.equals(share.getCommodity().getCode(), commodityShare.getCommodity().getCode())){
-                throw new NotFoundCustomException("CommodityShare for this client already exist. Update the amount.", 400);
+                double oldAmount = share.getAmount();
+                double newAmount = oldAmount + commodityShare.getAmount();
+                updateCommodityAmount(share.getId(), newAmount);
+                return share;
             }
         }
         return commodityShareDao.save(commodityShare);
