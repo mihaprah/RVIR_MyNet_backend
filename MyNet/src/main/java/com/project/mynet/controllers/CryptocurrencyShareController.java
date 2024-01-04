@@ -41,5 +41,11 @@ public class CryptocurrencyShareController {
         return ResponseEntity.ok(newCryptocurrencyShareAmount);
     }
 
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteShare(@PathVariable("id")Long id) {
+        String message = cryptocurrencyShareService.deleteShare(id);
+        return ResponseEntity.ok(message);
+    }
+
 
 }

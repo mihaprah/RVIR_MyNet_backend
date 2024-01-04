@@ -47,5 +47,11 @@ public class CommodityShareService {
         return commodityShare.getAmount();
     }
 
+    public String deleteShare(Long id) {
+        commodityShareDao.findById(id).orElseThrow(() -> new NotFoundCustomException("Share with this ID does not exist.", 400));
+        commodityShareDao.deleteById(id);
+        return "Deleted successfully.";
+    }
+
 
 }

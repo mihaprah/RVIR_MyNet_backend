@@ -44,6 +44,10 @@ public class CommodityShareController {
         return ResponseEntity.ok(newCommodityShareAmount);
     }
 
-
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteShare(@PathVariable("id")Long id) {
+        String message = commodityShareService.deleteShare(id);
+        return ResponseEntity.ok(message);
+    }
 
 }

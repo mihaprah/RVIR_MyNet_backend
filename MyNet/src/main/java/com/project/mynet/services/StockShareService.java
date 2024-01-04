@@ -47,4 +47,10 @@ public class StockShareService {
         return stockShare.getAmount();
     }
 
+    public String deleteShare(Long id) {
+        stockShareDao.findById(id).orElseThrow(() -> new NotFoundCustomException("Share with this ID does not exist.", 400));
+        stockShareDao.deleteById(id);
+        return "Deleted successfully.";
+    }
+
 }

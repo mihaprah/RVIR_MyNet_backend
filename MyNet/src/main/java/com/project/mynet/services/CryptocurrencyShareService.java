@@ -47,5 +47,9 @@ public class CryptocurrencyShareService {
         return cryptocurrencyShare.getAmount();
     }
 
-
+    public String deleteShare(Long id) {
+        cryptocurrencyShareDao.findById(id).orElseThrow(() -> new NotFoundCustomException("Share with this ID does not exist.", 400));
+        cryptocurrencyShareDao.deleteById(id);
+        return "Deleted successfully.";
+    }
 }

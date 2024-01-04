@@ -43,4 +43,10 @@ public class StockShareController {
         return ResponseEntity.ok(newStockShareAmount);
     }
 
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteShare(@PathVariable("id")Long id) {
+        String message = stockShareService.deleteShare(id);
+        return ResponseEntity.ok(message);
+    }
+
 }
